@@ -10,19 +10,6 @@ const app = express()
 
 dotenv.config()
 
-mongoose
-  .connect(process.env.dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then((result) => {
-    console.log('connected to db')
-    app.listen(process.env.PORT, () => {
-      console.log(`Listening at http://localhost:${process.env.PORT}`)
-    })
-  })
-  .catch((err) => console.error(err))
-
 app.use(cors())
 
 app.use(morgan('dev'))
@@ -36,6 +23,19 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
 require('./routes/todo.routes')(app)
+
+mongoose
+  .connect(process.env.dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((result) => {
+    console.log('connected to db')
+    app.listen(process.env.PORT, () => {
+      console.log(`Listening at http://localhost:${process.env.PORT}`)
+    })
+  })
+  .catch((err) => console.error(err))
 //register view engine
 // app.set('view engine', 'ejs')
 // app.get('/', (req, res) => {
