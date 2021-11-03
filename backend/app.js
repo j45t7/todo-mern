@@ -4,9 +4,24 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
+const Todo = require('./models/todo')
+
 const app = express()
 
 dotenv.config()
+
+mongoose
+  .connect(process.env.dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((result) => {
+    console.log('connected to db')
+    app.listen(process.env.PORT, () => {
+      console.log(`Listening at http://localhost:${process.env.PORT}`)
+    })
+  })
+  .catch((err) => console.error(err))
 
 app.use(cors())
 
@@ -43,9 +58,30 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Todo', todos })
 })
 
-app.use((req,res) => {
-  res.status(404).render('404', {title: '404'})
+app.get('/add-todo', (req, res) => {
+  const todo = new Todo({
+    todo: 'new todo 2',
+    completed: false,
+  })
+
+  todo
+    .save()
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err))
 })
-app.listen(process.env.PORT, () => {
-  console.log(`Listening at http://localhost:${process.env.PORT}`)
+
+app.get('/todos', (req, res) => {
+  Todo.find()
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err))
+})
+
+app.get('/todo', (req, res) => {
+  Todo.findById('6182256ff023c0240750d129')
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err))
+})
+
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404' })
 })
