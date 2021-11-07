@@ -7,7 +7,18 @@ import TodoList from './components/TodoList'
 import Header from './components/Header'
 import Box from '@mui/material/Box'
 import NewTodo from './components/NewTodo'
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    marginBottom: '1rem',
+    color: '#3D2C8D',
+    fontWeight: 'bold',
+  },
+}))
+
 function App() {
+  const classes = useStyles()
   return (
     <>
       <Header />
@@ -19,7 +30,12 @@ function App() {
             p: { xs: 2, md: 3 },
           }}
         >
-          <Typography component='h1' variant='h4' align='center'>
+          <Typography
+            className={classes.title}
+            component='h1'
+            variant='h5'
+            align='center'
+          >
             Things to do today
           </Typography>
           <NewTodo />

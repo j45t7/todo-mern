@@ -14,17 +14,13 @@ import Todo from './Todo'
 
 const TodoList = () => {
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Box sx={{ width: '100%' }}>
-          <List>
-            <Todo />
-            <Todo />
-            <Todo />
-          </List>
-        </Box>
-      </Grid>
-    </Grid>
+    <Box sx={{ width: '100%' }}>
+      <List>
+        <Todo />
+        <Todo />
+        <Todo />
+      </List>
+    </Box>
   )
 }
 

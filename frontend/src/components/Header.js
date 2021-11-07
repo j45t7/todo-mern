@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import { alpha, makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: '#2C394B',
+    background: '#3D2C8D',
   },
 }))
 
