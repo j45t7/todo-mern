@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import Grid from '@mui/material/Grid'
-import Input from '@mui/material/Input'
+import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import Box from '@mui/material/Box'
 import { makeStyles } from '@mui/styles'
+import { useDispatch } from 'react-redux'
+
+import { addTodo } from '../store/todo-slice'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -18,26 +23,63 @@ const useStyles = makeStyles((theme) => ({
 
 const NewTodo = () => {
   const classes = useStyles()
+  const [isFormInvalid, setIsFormInvalid] = useState(false)
+  const [enteredValue, setEnteredValue] = useState('')
+  const dispatch = useDispatch()
+
+  const submitHandler = (event) => {
+    event.preventDefault()
+    console.log(enteredValue)
+
+    if (enteredValue.trim().length === 0) {
+      setIsFormInvalid(true)
+      return
+    } else {
+      setIsFormInvalid(false)
+    }
+    dispatch(
+      addTodo({
+        text: enteredValue,
+      })
+    )
+
+    setEnteredValue('')
+  }
+
+  const changeHandler = (event) => {
+    setEnteredValue(event.target.value)
+  }
 
   return (
-    <form>
+    <Box component='form' onSubmit={submitHandler}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Input
-            id='todo'
-            name='todo'
-            placeholder='What to do...'
-            fullWidth
-            variant='standard'
-          />
+          <FormControl fullWidth>
+            <TextField
+              error={isFormInvalid}
+              helperText={isFormInvalid && `Can't be empty`}
+              id='todo'
+              name='text'
+              placeholder='What to do...'
+              fullWidth
+              variant='standard'
+              onChange={changeHandler}
+              value={enteredValue}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Button className={classes.button} variant='contained' fullWidth>
+          <Button
+            type='submit'
+            className={classes.button}
+            variant='contained'
+            fullWidth
+          >
             Add
           </Button>
         </Grid>
       </Grid>
-    </form>
+    </Box>
   )
 }
 

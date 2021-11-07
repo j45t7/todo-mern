@@ -11,11 +11,11 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import IconButton from '@mui/material/IconButton'
 
-const Todo = () => {
+const Todo = ({ id, text, completed }) => {
   return (
     <>
       <ListItem>
-        <ListItemText primary='Todo' />
+        <ListItemText primary={text} />
         <IconButton>
           <CreateOutlinedIcon />
         </IconButton>

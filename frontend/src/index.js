@@ -4,11 +4,15 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { StyledEngineProvider } from '@mui/material/styles'
+import { Provider } from 'react-redux'
 
+import store from './store/store'
 ReactDOM.render(
-  <StyledEngineProvider injectFirst>
-    <App />
-  </StyledEngineProvider>,
+  <Provider store={store}>
+    <StyledEngineProvider injectFirst>
+      <App />
+    </StyledEngineProvider>
+  </Provider>,
   document.getElementById('root')
 )
 
