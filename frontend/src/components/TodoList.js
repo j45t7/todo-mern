@@ -1,12 +1,12 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Todo from './Todo'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const TodoList = () => {
   const todos = useSelector((state) => state.todos)
-  const dispatch = useDispatch()
 
+  //TODO: Add message when no list
   return (
     <Box sx={{ width: '100%' }}>
       {todos.map((todo) => (

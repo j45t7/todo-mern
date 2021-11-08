@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
 import Paper from '@mui/material/Paper'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import TodoList from './components/TodoList'
 import Header from './components/Header'
-import Box from '@mui/material/Box'
 import NewTodo from './components/NewTodo'
 import { makeStyles } from '@mui/styles'
 
+//TODO:DArk mode
 const useStyles = makeStyles((theme) => ({
   title: {
     marginBottom: '1rem',

@@ -1,11 +1,11 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
-import { makeStyles } from '@mui/styles'
 import { useDispatch } from 'react-redux'
+import { makeStyles } from '@mui/styles'
 
 import { addTodo } from '../store/todo-slice'
 
@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const isNotValid = (value) => value.trim().length === 0
+
 const NewTodo = () => {
   const classes = useStyles()
   const [isFormInvalid, setIsFormInvalid] = useState(false)
@@ -29,9 +31,8 @@ const NewTodo = () => {
 
   const submitHandler = (event) => {
     event.preventDefault()
-    console.log(enteredValue)
 
-    if (enteredValue.trim().length === 0) {
+    if (isNotValid(enteredValue)) {
       setIsFormInvalid(true)
       return
     } else {
