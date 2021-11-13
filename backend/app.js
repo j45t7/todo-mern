@@ -14,7 +14,7 @@ app.use(cors())
 
 app.use(morgan('dev'))
 // parse requests of content-type - application/json
-// app.use(express.json())
+app.use(express.json())
 
 //middle & static files
 app.use(express.static('public'))
