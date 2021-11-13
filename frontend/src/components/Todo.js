@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import IconButton from '@mui/material/IconButton'
-import { toggleComplete, deleteTodo, editTodo } from '../store/todo-slice'
+import { toggleTodoAsync, deleteTodo, editTodo } from '../store/todo-slice'
 
 const useStyles = makeStyles((theme) => ({
   completed: {
@@ -38,9 +38,11 @@ const Todo = ({ id, text, completed }) => {
   const dispatch = useDispatch()
 
   const toggleCompleteHandler = () => {
+    // console.log(id)
+    // console.log(completed)
     dispatch(
-      toggleComplete({
-        id: id,
+      toggleTodoAsync({
+        id,
         completed: !completed,
       })
     )

@@ -1,32 +1,90 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
+
+export const getTodosAsync = createAsyncThunk(
+  'todos/getTodosAsync',
+  async () => {
+    const response = await fetch('http://localhost:5000/todos')
+    if (response.ok) {
+      const todos = await response.json()
+      return { todos }
+    }
+  }
+)
+
+export const addTodoAsync = createAsyncThunk(
+  'todos/addTodoAsync',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/todos/new-todo',
+        payload
+      )
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
+export const toggleTodoAsync = createAsyncThunk(
+  'todos/toggleTodoAsync',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { id, completed } = payload
+      const response = await axios.put(`http://localhost:5000/todos/${id}`, {
+        completed,
+      })
+      return response.data
+    } catch (error) {
+      console.log(error)
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
 
 export const todoSlice = createSlice({
   name: 'todos',
-  initialState: [
-    { id: 1, text: 'todo1', completed: false },
-    { id: 2, text: 'todo2', completed: false },
-    { id: 3, text: 'todo2', completed: true },
-  ],
+  initialState: [],
   reducers: {
-    addTodo: (state, action) => {
-      const newTodo = {
-        id: uuidv4(),
-        text: action.payload.text,
-        completed: false,
-      }
-      state.push(newTodo)
-    },
-    toggleComplete: (state, action) => {
-      const index = state.findIndex((todo) => todo.id === action.payload.id)
-      state[index].completed = action.payload.completed
-    },
+    // addTodo: (state, action) => {
+    //   const newTodo = {
+    //     id: uuidv4(),
+    //     text: action.payload.text,
+    //     completed: false,
+    //   }
+    //   console.log(newTodo)
+    //   state.push(newTodo)
+    // },
+    // toggleComplete: (state, action) => {
+    //   const index = state.findIndex((todo) => todo.id === action.payload.id)
+    //   state[index].completed = action.payload.completed
+    // },
     deleteTodo: (state, action) => {
       return state.filter((todo) => todo.id !== action.payload.id)
     },
     editTodo: (state, action) => {
       const index = state.findIndex((todo) => todo.id === action.payload.id)
       state[index].text = action.payload.text
+    },
+  },
+  extraReducers: {
+    [getTodosAsync.pending]: (state, action) => {
+      console.log('Fetching data')
+    },
+    [getTodosAsync.fulfilled]: (state, action) => {
+      console.log('Fetched data...')
+      return action.payload.todos
+    },
+    [addTodoAsync.fulfilled]: (state, action) => {
+      state.push(action.payload)
+    },
+    [toggleTodoAsync.fulfilled]: (state, action) => {
+      return state.map((todo) =>
+        todo._id === action.payload._id ? action.payload : todo
+      )
     },
   },
 })

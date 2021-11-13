@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import { useDispatch } from 'react-redux'
 import { makeStyles } from '@mui/styles'
 
-import { addTodo } from '../store/todo-slice'
+import { addTodoAsync } from '../store/todo-slice'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -38,19 +38,20 @@ const NewTodo = () => {
     } else {
       setIsFormInvalid(false)
     }
+
     dispatch(
-      addTodo({
+      addTodoAsync({
         text: enteredValue,
       })
     )
 
+    console.log(enteredValue)
     setEnteredValue('')
   }
 
   const changeHandler = (event) => {
     setEnteredValue(event.target.value)
   }
-
   return (
     <Box component='form' onSubmit={submitHandler}>
       <Grid container spacing={3}>
@@ -59,7 +60,7 @@ const NewTodo = () => {
             <TextField
               error={isFormInvalid}
               helperText={isFormInvalid && `Can't be empty`}
-              id='todo'
+              id='text'
               name='text'
               placeholder='What to do...'
               fullWidth
