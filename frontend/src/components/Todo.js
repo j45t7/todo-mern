@@ -38,8 +38,6 @@ const Todo = ({ id, text, completed }) => {
   const dispatch = useDispatch()
 
   const toggleCompleteHandler = () => {
-    // console.log(id)
-    // console.log(completed)
     dispatch(
       toggleTodoAsync({
         id,

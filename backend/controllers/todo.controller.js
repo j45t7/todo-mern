@@ -30,7 +30,7 @@ exports.findAll = async (req, res) => {
   }
 }
 
-// Find a single todo with an id
+// Update a todo by the id in the request
 exports.update = async (req, res) => {
   const { id } = req.params
   const { completed } = req.body
@@ -45,9 +45,6 @@ exports.update = async (req, res) => {
     res.status(500).send(`Error: ${error.message}`)
   }
 }
-
-// // Update a todo by the id in the request
-// exports.update = (req, res) => {}
 
 // // Delete a todo with the specified id in the request
 // exports.delete = (req, res) => {}

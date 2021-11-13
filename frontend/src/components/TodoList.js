@@ -7,6 +7,7 @@ import { getTodosAsync } from '../store/todo-slice'
 const TodoList = () => {
   const todos = useSelector((state) => state.todos)
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(getTodosAsync())
   }, [dispatch])
