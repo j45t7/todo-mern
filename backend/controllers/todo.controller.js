@@ -31,7 +31,7 @@ exports.findAll = async (req, res) => {
 }
 
 // Find a single todo with an id
-exports.findOne = async (req, res) => {
+exports.update = async (req, res) => {
   const { id } = req.params
   const { completed } = req.body
   try {

@@ -9,16 +9,13 @@ module.exports = (app) => {
   // Retrieve all todos
   router.get('/', todo.findAll)
 
-  // Retrieve a single todo with id
-  router.put('/:id', todo.findOne)
+  // Update a todo with id
+  router.put('/:id', todo.update)
 
-  // // Update a todo with id
-  // router.put('/:id', todo.update)
-
-  // // Delete a Tutorial with id
+  // Delete a Tutorial with id
   // router.delete('/:id', todo.delete)
 
-  // // Create a new todo
+  // Delete all
   // router.delete('/', todo.deleteAll)
 
   app.use('/todos', router)
