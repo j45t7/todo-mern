@@ -7,10 +7,10 @@ module.exports = (app) => {
   router.post('/new-todo', todo.create)
 
   // Retrieve all todos
-  router.get('/todos', todo.findAll)
+  router.get('/', todo.findAll)
 
   // Retrieve a single todo with id
-  router.get('/:id', todo.findOne)
+  router.put('/:id', todo.findOne)
 
   // // Update a todo with id
   // router.put('/:id', todo.update)
@@ -21,5 +21,5 @@ module.exports = (app) => {
   // // Create a new todo
   // router.delete('/', todo.deleteAll)
 
-  app.use('/api/todolist', router)
+  app.use('/todos', router)
 }

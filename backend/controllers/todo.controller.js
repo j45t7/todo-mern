@@ -1,38 +1,49 @@
 const Todo = require('../models/todo')
-
+const { v4: uuidv4 } = require('uuid')
 // Create and Save a new todo
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.todo) {
+exports.create = async (req, res) => {
+  try {
+    const { text } = req.body
+    console.log(text)
+    let todo = new Todo({
+      id: uuidv4(),
+      text: text,
+      completed: false,
+    })
+
+    todo = await todo.save()
+    res.send(todo)
+  } catch (error) {
+    console.log(error.message)
     res.status(400).send({ message: 'Content can not be empty!' })
-    return
   }
-
-  const todo = new Todo({
-    todo: 'new todo 2',
-    completed: false,
-  })
-
-  todo
-    .save()
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err))
 }
 
 // Retrieve all todos from the database.
-exports.findAll = (req, res) => {
-  Todo.find()
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err))
+exports.findAll = async (req, res) => {
+  try {
+    const todos = await Todo.find()
+    res.send(todos)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send(`Error: ${error.message}`)
+  }
 }
 
 // Find a single todo with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id
-  Todo.findById(id)
-    //  Todo.findById('6182256ff023c0240750d129')
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err))
+exports.findOne = async (req, res) => {
+  const { id } = req.params
+  const { completed } = req.body
+  try {
+    const todo = await Todo.findById(id)
+    if (!todo) return res.status(404).send(`Todo not found...`)
+    todo.completed = completed
+    todo.save()
+    res.send(todo)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send(`Error: ${error.message}`)
+  }
 }
 
 // // Update a todo by the id in the request
