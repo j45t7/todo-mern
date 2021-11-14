@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#3D2C8D',
     fontWeight: 'bold',
   },
+  container: {
+    paddingBottom: '2rem',
+  },
 }))
 
 function App() {
@@ -41,7 +44,12 @@ function App() {
           <NewTodo />
         </Paper>
       </Container>
-      <Container component='main' maxWidth='sm' sx={{ mb: 4 }}>
+      <Container
+        component='main'
+        className={classes.container}
+        maxWidth='sm'
+        sx={{ mb: 4 }}
+      >
         <Paper
           elevation={6}
           sx={{
