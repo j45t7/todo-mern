@@ -31,7 +31,7 @@ exports.findAll = async (req, res) => {
 }
 
 // Update a todo by the id in the request
-exports.update = async (req, res) => {
+exports.updateComplete = async (req, res) => {
   const { id } = req.params
   const { completed } = req.body
   try {
@@ -46,8 +46,35 @@ exports.update = async (req, res) => {
   }
 }
 
-// // Delete a todo with the specified id in the request
-// exports.delete = (req, res) => {}
+// Update a todo text by the id in the request
+exports.updateEdit = async (req, res) => {
+  const { id } = req.params
+  const { text } = req.body
+  try {
+    const todo = await Todo.findById(id)
+    if (!todo) return res.status(404).send(`Todo not found...`)
+    todo.text = text
+    todo.save()
+    res.send(todo)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send(`Error: ${error.message}`)
+  }
+}
+
+// Delete a todo with the specified id in the request
+exports.delete = async (req, res) => {
+  const { id } = req.params
+  try {
+    const todo = await Todo.findById(id)
+    if (!todo) return res.status(404).send(`Todo not found...`)
+    const deletedTodo = await Todo.findByIdAndDelete(id)
+    res.send(deletedTodo)
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send(`Error: ${error.message}`)
+  }
+}
 
 // // Delete all todos from the database.
 // exports.deleteAll = (req, res) => {}

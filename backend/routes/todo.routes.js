@@ -10,10 +10,13 @@ module.exports = (app) => {
   router.get('/', todo.findAll)
 
   // Update a todo with id
-  router.put('/:id', todo.update)
+  router.put('/todo-completed/:id', todo.updateComplete)
+
+  // Update a todo with id
+  router.put('/todo-edited/:id', todo.updateEdit)
 
   // Delete a Tutorial with id
-  // router.delete('/:id', todo.delete)
+  router.delete('/:id', todo.delete)
 
   // Delete all
   // router.delete('/', todo.deleteAll)
